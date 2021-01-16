@@ -21,6 +21,12 @@ namespace MyFirstConsoleApp
             boolFlag = firstNum < secondNum; //false
             Console.WriteLine(firstStr + symbolStr[5] + symbolStr[2] + symbolStr[5] + secondStr + 
                 symbolStr[1] + symbolStr[5] + boolFlag + symbolStr[0]);
+            boolFlag = firstNum == secondNum;
+            Console.WriteLine(firstStr + symbolStr[5] + symbolStr[4] + symbolStr[5] + secondStr +
+                symbolStr[1] + symbolStr[5] + boolFlag + symbolStr[0]);
+            boolFlag = firstNum != secondNum;
+            Console.WriteLine(firstStr + symbolStr[5] + symbolStr[0] + symbolStr[4] + symbolStr[5] + 
+                secondStr + symbolStr[1] + symbolStr[5] + boolFlag + symbolStr[0]);
         }
     }
 }
