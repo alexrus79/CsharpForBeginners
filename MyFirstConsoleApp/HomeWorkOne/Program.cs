@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace MyFirstConsoleApp
+namespace HomeWorkOne
 {
     class Program
     {
