@@ -38,7 +38,6 @@ namespace RussianBlackJack
 
                 if (answer == "y")
                 {
-                    answer = "";
                     Random random = new Random();
                     int[] dealerHand = new int[1];
                     int[] playerHand = new int[1];
