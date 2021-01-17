@@ -11,21 +11,21 @@ namespace MyFirstConsoleApp
             sbyte secondNum = 127;
             string firstStr = "firstNum";
             string secondStr = "secondNum";
-            string symbolStr  = "!?<>= ";             
-            
+            string symbolStr = "!?<>= ";
+
             boolFlag = firstNum > secondNum;
             Console.WriteLine(firstStr + symbolStr[5] + symbolStr[4] + symbolStr[5] + firstNum);
             Console.WriteLine(secondStr + symbolStr[5] + symbolStr[4] + symbolStr[5] + secondNum);
-            Console.WriteLine(firstStr + symbolStr[5] + symbolStr[3] + symbolStr[5] + secondStr + 
-                symbolStr[1] + symbolStr[5]+ boolFlag + symbolStr[0]);
+            Console.WriteLine(firstStr + symbolStr[5] + symbolStr[3] + symbolStr[5] + secondStr +
+                symbolStr[1] + symbolStr[5] + boolFlag + symbolStr[0]);
             boolFlag = firstNum < secondNum;
-            Console.WriteLine(firstStr + symbolStr[5] + symbolStr[2] + symbolStr[5] + secondStr + 
+            Console.WriteLine(firstStr + symbolStr[5] + symbolStr[2] + symbolStr[5] + secondStr +
                 symbolStr[1] + symbolStr[5] + boolFlag + symbolStr[0]);
             boolFlag = firstNum == secondNum;
             Console.WriteLine(firstStr + symbolStr[5] + symbolStr[4] + symbolStr[5] + secondStr +
                 symbolStr[1] + symbolStr[5] + boolFlag + symbolStr[0]);
             boolFlag = firstNum != secondNum;
-            Console.WriteLine(firstStr + symbolStr[5] + symbolStr[0] + symbolStr[4] + symbolStr[5] + 
+            Console.WriteLine(firstStr + symbolStr[5] + symbolStr[0] + symbolStr[4] + symbolStr[5] +
                 secondStr + symbolStr[1] + symbolStr[5] + boolFlag + symbolStr[0]);
 
             byte byteNumFull = 255;
@@ -44,7 +44,7 @@ namespace MyFirstConsoleApp
 
             int intNumFull = 2147483647;
             over = 100;
-            long longNumber =intNumFull;
+            long longNumber = intNumFull;
             longNumber = longNumber + over;
             intNumFull = (int)longNumber;
             Console.WriteLine("-2147483648 - 2147483647 -> " + intNumFull + " Переполнение типа int на " + over);
