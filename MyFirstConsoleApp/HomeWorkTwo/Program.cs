@@ -6,7 +6,7 @@ namespace RussianBlackJack
     {
         static void Main(string[] args)
         {
-            string answer = "";
+            bool answer = false;
             string questionPlay = "Дилер: Сыграем? (y/n)";
             string questionPlayAgain = "Дилер: Сыграем еще раз? (y/n)";
             string questionMore = "Дилер: Еще? (y/n)";
@@ -29,14 +29,10 @@ namespace RussianBlackJack
 
                 if (againGameAttribute == false)
                 {
-                    do
-                    {                        
-                        Console.Write(questionPlay);
-                        answer = Console.ReadLine();
-                    } while (answer != "y" && answer != "n") ;
+                    answer = question(questionPlay);
                 }
 
-                if (answer == "y")
+                if (answer)
                 {
                     int[] dealerHand = new int[0];
                     int[] playerHand = new int[0];
@@ -57,13 +53,9 @@ namespace RussianBlackJack
 
                     do
                     {
-                        do
-                        {
-                            Console.Write(questionMore);
-                            answer = Console.ReadLine();
-                        } while (answer != "y" && answer != "n");
-                        
-                        if (answer == "y" && playerHand.Length < 20)
+                        answer = question(questionMore);
+
+                        if (answer == true && playerHand.Length < 20)
                         {
                             GetCard(ref deck, ref playerHand);
 
@@ -86,7 +78,6 @@ namespace RussianBlackJack
                             playerPas = true;
 
                             summDealerHand = GetSumHand(dealerHand, out winHand);
-
                             while (summDealerHand < 16)
                             {
                                 GetCard(ref deck, ref dealerHand);
@@ -94,7 +85,7 @@ namespace RussianBlackJack
                             }
                             dealerPas = true;
                         }
-                    } while (playerPas == false || dealerPas == false);                    
+                    } while (playerPas == false || dealerPas == false);
 
                     summPlayerHand = GetSumHand(playerHand, out winHand);
 
@@ -136,13 +127,13 @@ namespace RussianBlackJack
                     {
                         playerWinHand = true;
                     }
-                    else if (summPlayerHand > 21 || 
-                        summDealerHand > summPlayerHand || 
+                    else if (summPlayerHand > 21 ||
+                        summDealerHand > summPlayerHand ||
                         summDealerHand == summPlayerHand)
                     {
                         dealerWinHand = true;
-                    } 
-                    
+                    }
+
                     if (dealerWinHand == true && playerWinHand == false)
                     {
                         Console.WriteLine(phraseYouLose);
@@ -151,14 +142,10 @@ namespace RussianBlackJack
                     {
                         Console.WriteLine(phraseYouWin);
                     }
+                    
+                    answer = question(questionPlayAgain);
 
-                    do
-                    {
-                        Console.Write(questionPlayAgain);
-                        answer = Console.ReadLine();
-                    } while (answer != "y" && answer != "n");
-
-                    if (answer == "y")
+                    if (answer)
                     {
                         againGameAttribute = true;
                     }
@@ -167,6 +154,21 @@ namespace RussianBlackJack
                 }
                 else againGameAttribute = false;
             } while (againGameAttribute);
+        }
+        private static bool question(string questionPlayAgain)
+        {
+            string answer;
+            do
+            {
+                Console.Write(questionPlayAgain);
+                answer = Console.ReadLine();
+            } while (answer != "y" && answer != "n");
+            
+            if (answer == "y")
+            {
+                return true;
+            }
+            else return false;
         }
 
         private static void GetCard(ref int[] deck, ref int[] gamerHand)
@@ -182,12 +184,12 @@ namespace RussianBlackJack
             deck = RemoveCardFromDeck(deck, card);           
         }
 
-        private static void PrintHand(string phraseYourHand, int[] playerHand)
+        private static void PrintHand(string phraseYourHand, int[] gamerHand)
         {
             Console.Write(phraseYourHand);
-            for (int i = 0; i < playerHand.Length; i++)
+            for (int i = 0; i < gamerHand.Length; i++)
             {
-                Console.Write(playerHand[i] + " ");
+                Console.Write(gamerHand[i] + " ");
             }
             
         }
