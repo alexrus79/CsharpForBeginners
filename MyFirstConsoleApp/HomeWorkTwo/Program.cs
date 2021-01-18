@@ -6,7 +6,6 @@ namespace RussianBlackJack
     {
         static void Main(string[] args)
         {
-            bool answer = false;
             string questionPlay = "Дилер: Сыграем? (y/n)";
             string questionPlayAgain = "Дилер: Сыграем еще раз? (y/n)";
             string questionMore = "Дилер: Еще? (y/n)";
@@ -16,6 +15,7 @@ namespace RussianBlackJack
             string phraseYouLose = "Вы проиграли!";
             string phraseYouWin = "Вы выиграли!!!";
             bool againGameAttribute = false;
+            bool answer = false;
 
             do
             {
@@ -155,12 +155,12 @@ namespace RussianBlackJack
                 else againGameAttribute = false;
             } while (againGameAttribute);
         }
-        private static bool question(string questionPlayAgain)
+        private static bool question(string phraseQuestion)
         {
             string answer;
             do
             {
-                Console.Write(questionPlayAgain);
+                Console.Write(phraseQuestion);
                 answer = Console.ReadLine();
             } while (answer != "y" && answer != "n");
             
