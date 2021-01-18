@@ -90,14 +90,11 @@ namespace RussianBlackJack
                             while (summDealerHand < 16)
                             {
                                 GetCard(ref deck, ref dealerHand);
-
                                 summDealerHand = GetSumHand(dealerHand, out winHand);
                             }
                             dealerPas = true;
                         }
-                    } while (playerPas == false || dealerPas == false);
-
-                    PrintHand(phrasePlayerHand, playerHand);
+                    } while (playerPas == false || dealerPas == false);                    
 
                     summPlayerHand = GetSumHand(playerHand, out winHand);
 
@@ -107,10 +104,9 @@ namespace RussianBlackJack
                         winHand = false;
                     }
 
+                    PrintHand(phrasePlayerHand, playerHand);
                     Console.Write("(" + summPlayerHand + ")");
                     Console.WriteLine();
-
-                    PrintHand(phraseDealerHand, dealerHand);
 
                     summDealerHand = GetSumHand(dealerHand, out winHand);
 
@@ -120,8 +116,10 @@ namespace RussianBlackJack
                         winHand = false;
                     }
 
+                    PrintHand(phraseDealerHand, dealerHand);
                     Console.Write("(" + summDealerHand + ")");
                     Console.WriteLine();
+
                     if (playerWinHand == true && dealerWinHand == false)
                     {
                         //Если у игрока два туза или пять картинок, то исключить все проверки
