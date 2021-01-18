@@ -65,16 +65,12 @@ namespace RussianBlackJack
                         
                         if (answer == "y" && playerHand.Length < 20)
                         {
-                            //сдаем карту игроку
-
                             GetCard(ref deck, ref playerHand);
 
                             summDealerHand = GetSumHand(dealerHand, out winHand);
 
                             if (summDealerHand < 16)
                             {
-                                //компьютер берет себе карту
-
                                 GetCard(ref deck, ref dealerHand);
                             }
                             else
@@ -93,8 +89,6 @@ namespace RussianBlackJack
 
                             while (summDealerHand < 16)
                             {
-                                //компьютер берет себе карту
-
                                 GetCard(ref deck, ref dealerHand);
 
                                 summDealerHand = GetSumHand(dealerHand, out winHand);
