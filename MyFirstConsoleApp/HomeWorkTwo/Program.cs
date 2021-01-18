@@ -38,9 +38,8 @@ namespace RussianBlackJack
 
                 if (answer == "y")
                 {
-                    Random random = new Random();
-                    int[] dealerHand = new int[1];
-                    int[] playerHand = new int[1];
+                    int[] dealerHand = new int[0];
+                    int[] playerHand = new int[0];
                     bool dealerPas = false;
                     bool playerPas = false;
                     bool winHand = false;
@@ -49,18 +48,10 @@ namespace RussianBlackJack
                     int summDealerHand;
                     int summPlayerHand;
 
-                    int card = random.Next(0, deck.Length); //вытаскиваем из колоды случайную карту
-                    
-                    playerHand[playerHand.Length - 1] = deck[card]; //присваиваем карту игроку                                                          
+                    GetCard(ref deck, ref playerHand);
 
-                    deck = RemoveCardFromDeck(deck, card);
+                    GetCard(ref deck, ref dealerHand);
 
-                    card = random.Next(0, deck.Length); //вытаскиваем из колоды случайную карту
-                    
-                    dealerHand[dealerHand.Length - 1] = deck[card]; //присваиваем карту дилеру                             
-
-                    deck = RemoveCardFromDeck(deck, card);
-                    
                     PrintHand(phrasePlayerHand, playerHand);
                     Console.WriteLine();
 
@@ -73,15 +64,10 @@ namespace RussianBlackJack
                         } while (answer != "y" && answer != "n");
                         
                         if (answer == "y" && playerHand.Length < 20)
-                        {                            
+                        {
                             //сдаем карту игроку
-                            Array.Resize(ref playerHand, playerHand.Length + 1); //увеличиваем массив на 1 элемент
-                            
-                            card = random.Next(0, deck.Length); //вытаскиваем из колоды случайную карту
-                            
-                            playerHand[playerHand.Length - 1] = deck[card]; //присваиваем карту игроку                                                          
 
-                            deck = RemoveCardFromDeck(deck, card);
+                            GetCard(ref deck, ref playerHand);
 
                             summDealerHand = GetSumHand(dealerHand, out winHand);
 
@@ -89,13 +75,7 @@ namespace RussianBlackJack
                             {
                                 //компьютер берет себе карту
 
-                                Array.Resize(ref dealerHand, dealerHand.Length + 1); //увеличиваем массив на 1 элемент
-                                
-                                card = random.Next(0, deck.Length); //вытаскиваем из колоды случайную карту
-                                
-                                dealerHand[dealerHand.Length - 1] = deck[card]; //присваиваем карту дилеру                             
-
-                                deck = RemoveCardFromDeck(deck, card);
+                                GetCard(ref deck, ref dealerHand);
                             }
                             else
                             {
@@ -115,13 +95,7 @@ namespace RussianBlackJack
                             {
                                 //компьютер берет себе карту
 
-                                Array.Resize(ref dealerHand, dealerHand.Length + 1); //увеличиваем массив на 1 элемент
-                                
-                                card = random.Next(0, deck.Length); //вытаскиваем из колоды случайную карту
-                                
-                                dealerHand[dealerHand.Length - 1] = deck[card]; //присваиваем карту дилеру                             
-
-                                deck = RemoveCardFromDeck(deck, card);
+                                GetCard(ref deck, ref dealerHand);
 
                                 summDealerHand = GetSumHand(dealerHand, out winHand);
                             }
@@ -201,6 +175,19 @@ namespace RussianBlackJack
                 }
                 else againGameAttribute = false;
             } while (againGameAttribute);
+        }
+
+        private static void GetCard(ref int[] deck, ref int[] gamerHand)
+        {
+            Random random = new Random();
+            int card;
+            Array.Resize(ref gamerHand, gamerHand.Length + 1);
+
+            card = random.Next(0, deck.Length); //вытаскиваем из колоды случайную карту
+
+            gamerHand[gamerHand.Length - 1] = deck[card]; //присваиваем карту игроку                                                          
+
+            deck = RemoveCardFromDeck(deck, card);           
         }
 
         private static void PrintHand(string phraseYourHand, int[] playerHand)
