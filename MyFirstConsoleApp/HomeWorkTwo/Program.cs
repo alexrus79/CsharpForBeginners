@@ -31,7 +31,7 @@ namespace RussianBlackJack
 
                 if (againGameAttribute == false)
                 {
-                    answer = question(questionPlay);
+                    answer = AskQuestion(questionPlay);
                 }
 
                 if (answer)
@@ -39,33 +39,33 @@ namespace RussianBlackJack
                     int[] dealerHand = new int[0];
                     int[] playerHand = new int[0];
                     bool dealerPas = false;
-                    bool playerPas = false;
-                    bool winHand = false;
+                    bool playerPas = false;                    
                     bool playerWinHand = false;
                     bool dealerWinHand = false;
-                    int summDealerHand;
-                    int summPlayerHand;
+                    int sumDealerHand;
+                    int sumPlayerHand;
+                    string winHand;
 
-                    GetCard(ref deck, ref playerHand);
+                    GiveCard(ref deck, ref playerHand);
 
-                    GetCard(ref deck, ref dealerHand);
+                    GiveCard(ref deck, ref dealerHand);
 
                     PrintHand(phrasePlayerHand, playerHand);
                     Console.WriteLine();
 
                     do
                     {
-                        answer = question(questionMore);
+                        answer = AskQuestion(questionMore);
 
                         if (answer == true && playerHand.Length < 20)
                         {
-                            GetCard(ref deck, ref playerHand);
+                            GiveCard(ref deck, ref playerHand);
 
-                            summDealerHand = GetSumHand(dealerHand, out winHand);
+                            sumDealerHand = GetSumHand(dealerHand, out winHand);
 
-                            if (summDealerHand < 16)
+                            if (sumDealerHand < 16)
                             {
-                                GetCard(ref deck, ref dealerHand);
+                                GiveCard(ref deck, ref dealerHand);
                             }
                             else
                             {
@@ -79,38 +79,52 @@ namespace RussianBlackJack
                         {
                             playerPas = true;
 
-                            summDealerHand = GetSumHand(dealerHand, out winHand);
-                            while (summDealerHand < 16)
+                            sumDealerHand = GetSumHand(dealerHand, out winHand);
+                            while (sumDealerHand < 16)
                             {
-                                GetCard(ref deck, ref dealerHand);
-                                summDealerHand = GetSumHand(dealerHand, out winHand);
+                                GiveCard(ref deck, ref dealerHand);
+                                sumDealerHand = GetSumHand(dealerHand, out winHand);
                             }
                             dealerPas = true;
                         }
                     } while (playerPas == false || dealerPas == false);
 
-                    summPlayerHand = GetSumHand(playerHand, out winHand);
+                    sumPlayerHand = GetSumHand(playerHand, out winHand);
 
-                    if (winHand == true)
+                    if (winHand != "")
                     {
                         playerWinHand = true;
-                        winHand = false;
+                        if (winHand == "TA")
+                        {
+                            phraseYouWin = "Вы выиграли! У Вас два ТУЗА!";
+                        }
+                        if (winHand == "FI")
+                        {
+                            phraseYouWin = "Вы выиграли! У Вас пять картинок!";
+                        }
                     }
 
                     PrintHand(phrasePlayerHand, playerHand);
-                    Console.Write("(" + summPlayerHand + ")");
+                    Console.Write("(" + sumPlayerHand + ")");
                     Console.WriteLine();
 
-                    summDealerHand = GetSumHand(dealerHand, out winHand);
+                    sumDealerHand = GetSumHand(dealerHand, out winHand);
 
-                    if (winHand == true)
+                    if (winHand != "")
                     {
                         dealerWinHand = true;
-                        winHand = false;
+                        if (winHand == "TA")
+                        {
+                            phraseYouLose = "Вы проиграли! У дилера два ТУЗА!";                            
+                        }
+                        if (winHand == "FI")
+                        {
+                            phraseYouLose = "Вы проиграли! У дилера пять картинок!";
+                        }
                     }
 
                     PrintHand(phraseDealerHand, dealerHand);
-                    Console.Write("(" + summDealerHand + ")");
+                    Console.Write("(" + sumDealerHand + ")");
                     Console.WriteLine();
 
                     if (playerWinHand == true && dealerWinHand == false)
@@ -125,17 +139,17 @@ namespace RussianBlackJack
                     {
                         playerWinHand = false; //Если у обоих игроков по туза или по пять картинок, то выиграл дилер
                     }
-                    else if ((summDealerHand > 21 && summPlayerHand <= 21) || summPlayerHand == 21)
+                    else if ((sumDealerHand > 21 && sumPlayerHand <= 21) || sumPlayerHand == 21)
                     {
                         playerWinHand = true;
                     }
-                    else if (summPlayerHand > 21 ||
-                        summDealerHand > summPlayerHand ||
-                        summDealerHand == summPlayerHand)
+                    else if (sumPlayerHand > 21 ||
+                        sumDealerHand > sumPlayerHand ||
+                        sumDealerHand == sumPlayerHand)
                     {
                         dealerWinHand = true;
                     }
-
+                    
                     if (dealerWinHand == true && playerWinHand == false)
                     {
                         dealerWin = dealerWin + 1; 
@@ -147,7 +161,7 @@ namespace RussianBlackJack
                         Console.WriteLine(phraseYouWin + " " + playerWin + ":" + dealerWin);
                     }
                     
-                    answer = question(questionPlayAgain);
+                    answer = AskQuestion(questionPlayAgain);
 
                     if (answer)
                     {
@@ -159,7 +173,7 @@ namespace RussianBlackJack
                 else againGameAttribute = false;
             } while (againGameAttribute);
         }
-        private static bool question(string phraseQuestion)
+        private static bool AskQuestion(string phraseQuestion)
         {
             string answer;
             do
@@ -175,7 +189,7 @@ namespace RussianBlackJack
             else return false;
         }
 
-        private static void GetCard(ref int[] deck, ref int[] gamerHand)
+        private static void GiveCard(ref int[] deck, ref int[] gamerHand)
         {
             Random random = new Random();
             int card;
@@ -208,18 +222,18 @@ namespace RussianBlackJack
             
         }
 
-        private static int GetSumHand(int[] Hand, out bool winHand)
+        private static int GetSumHand(int[] Hand, out string winHand)
         {
             int sum = 0;
             bool fiveCardImade = true;
-            winHand = false;
+            winHand = "";
 
             for (int i = 0; i < Hand.Length; i++)
             {
                 if (sum == 11 && Hand[i] == 11 && i == 1)
                 {
                     sum = 21;
-                    winHand = true;
+                    winHand = "TA"; //two aces
                     break;
                 } 
 
@@ -235,7 +249,7 @@ namespace RussianBlackJack
             if (fiveCardImade && Hand.Length == 5)
             {
                 sum = 21; //усли все картинки и их пять то рука выигрышная
-                winHand = true;
+                winHand = "FI"; //five images
             }
             
             return sum;
