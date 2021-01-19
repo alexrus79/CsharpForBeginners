@@ -16,6 +16,8 @@ namespace RussianBlackJack
             string phraseYouWin = "Вы выиграли!!!";
             bool againGameAttribute = false;
             bool answer = false;
+            int dealerWin = 0;
+            int playerWin = 0;
 
             do
             {
@@ -123,7 +125,7 @@ namespace RussianBlackJack
                     {
                         playerWinHand = false; //Если у обоих игроков по туза или по пять картинок, то выиграл дилер
                     }
-                    else if (summDealerHand > 21 || summPlayerHand == 21)
+                    else if ((summDealerHand > 21 && summPlayerHand <= 21) || summPlayerHand == 21)
                     {
                         playerWinHand = true;
                     }
@@ -136,11 +138,13 @@ namespace RussianBlackJack
 
                     if (dealerWinHand == true && playerWinHand == false)
                     {
-                        Console.WriteLine(phraseYouLose);
+                        dealerWin = dealerWin + 1; 
+                        Console.WriteLine(phraseYouLose + " " + playerWin + ":" + dealerWin);
                     }
                     else
                     {
-                        Console.WriteLine(phraseYouWin);
+                        playerWin = playerWin + 1;
+                        Console.WriteLine(phraseYouWin + " " + playerWin + ":" + dealerWin);
                     }
                     
                     answer = question(questionPlayAgain);
@@ -180,8 +184,18 @@ namespace RussianBlackJack
             card = random.Next(0, deck.Length); //вытаскиваем из колоды случайную карту
 
             gamerHand[gamerHand.Length - 1] = deck[card]; //присваиваем карту игроку                                                          
+          
+            int[] newDeck = new int[deck.Length - 1];
+            for (int i = 0; i < card; i++)
+            {
+                newDeck[i] = deck[i];
+            }
+            for (int i = card; i < deck.Length - 1; i++)
+            {
+                newDeck[i] = deck[i + 1];
+            }
+            deck = newDeck;
 
-            deck = RemoveCardFromDeck(deck, card);           
         }
 
         private static void PrintHand(string phraseYourHand, int[] gamerHand)
@@ -192,21 +206,6 @@ namespace RussianBlackJack
                 Console.Write(gamerHand[i] + " ");
             }
             
-        }
-
-        private static int[] RemoveCardFromDeck(int[] deck, int index)
-        {
-
-            int[] newDeck = new int[deck.Length - 1];
-            for (int i = 0; i < index; i++)
-            {
-                newDeck[i] = deck[i];
-            }
-            for (int i = index; i < deck.Length - 1; i++)
-            {
-                newDeck[i] = deck[i + 1];
-            }
-            return newDeck;
         }
 
         private static int GetSumHand(int[] Hand, out bool winHand)
