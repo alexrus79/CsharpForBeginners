@@ -161,11 +161,9 @@ namespace RussianBlackJack
                         Console.WriteLine(phraseYouWin + " " + playerWin + ":" + dealerWin);
                     }
 
-                    if (winHand != "")
-                    {
-                        phraseYouLose = "Вы проиграли!";
-                        phraseYouWin = "Вы выиграли!!!";
-                    }
+                     phraseYouLose = "Вы проиграли!";
+                     phraseYouWin = "Вы выиграли!!!";
+                    
 
                     answer = AskQuestion(questionPlayAgain);
                     if (answer)
