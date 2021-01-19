@@ -160,9 +160,14 @@ namespace RussianBlackJack
                         playerWin = playerWin + 1;
                         Console.WriteLine(phraseYouWin + " " + playerWin + ":" + dealerWin);
                     }
-                    
-                    answer = AskQuestion(questionPlayAgain);
 
+                    if (winHand != "")
+                    {
+                        phraseYouLose = "Вы проиграли!";
+                        phraseYouWin = "Вы выиграли!!!";
+                    }
+
+                    answer = AskQuestion(questionPlayAgain);
                     if (answer)
                     {
                         againGameAttribute = true;
@@ -248,7 +253,7 @@ namespace RussianBlackJack
 
             if (fiveCardImade && Hand.Length == 5)
             {
-                sum = 21; //усли все картинки и их пять то рука выигрышная
+                sum = 21; //если все картинки и их пять то рука выигрышная
                 winHand = "FI"; //five images
             }
             
