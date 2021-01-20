@@ -178,14 +178,16 @@ namespace RussianBlackJack
         }
         private static bool AskQuestion(string phraseQuestion)
         {
-            string answer;
+            ConsoleKeyInfo cki;
             do
             {
                 Console.Write(phraseQuestion);
-                answer = Console.ReadLine();
-            } while (answer != "y" && answer != "n");
-            
-            if (answer == "y")
+                cki = Console.ReadKey();
+                Console.WriteLine();
+
+            } while (cki.KeyChar != 'y' && cki.KeyChar != 'n');
+
+            if (cki.KeyChar == 'y')
             {
                 return true;
             }

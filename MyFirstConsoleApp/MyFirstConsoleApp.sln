@@ -7,7 +7,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HomeWorkOne", "HomeWorkOne\
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HomeWorkTwo", "HomeWorkTwo\HomeWorkTwo.csproj", "{8D2D52D1-B7E8-4E3F-88E1-314A2BCC391F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "lessonThree", "lessonThree\lessonThree.csproj", "{FDA9431E-930F-4F30-A403-21AB902B8786}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "lessonThree", "lessonThree\lessonThree.csproj", "{FDA9431E-930F-4F30-A403-21AB902B8786}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
