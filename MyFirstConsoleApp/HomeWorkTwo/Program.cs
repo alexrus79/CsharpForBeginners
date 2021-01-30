@@ -189,6 +189,7 @@ namespace RussianBlackJack
 
             if (cki.KeyChar == 'y')
             {
+                Console.Clear();
                 return true;
             }
             else return false;
