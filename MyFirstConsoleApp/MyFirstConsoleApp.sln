@@ -9,6 +9,10 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BlackJack", "BlackJack\Blac
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HomeWork", "HomeWork\HomeWork.csproj", "{6E49CBC1-718D-4088-A00E-E38BAD372701}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BasicInheritance", "BasicInheritance\BasicInheritance.csproj", "{D6ED2638-3228-424C-BD98-61067B48FC14}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Employees", "Employees\Employees.csproj", "{053C8F37-96EA-48E9-817A-DB02B38288BC}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -27,6 +31,14 @@ Global
 		{6E49CBC1-718D-4088-A00E-E38BAD372701}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{6E49CBC1-718D-4088-A00E-E38BAD372701}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{6E49CBC1-718D-4088-A00E-E38BAD372701}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D6ED2638-3228-424C-BD98-61067B48FC14}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D6ED2638-3228-424C-BD98-61067B48FC14}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D6ED2638-3228-424C-BD98-61067B48FC14}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D6ED2638-3228-424C-BD98-61067B48FC14}.Release|Any CPU.Build.0 = Release|Any CPU
+		{053C8F37-96EA-48E9-817A-DB02B38288BC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{053C8F37-96EA-48E9-817A-DB02B38288BC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{053C8F37-96EA-48E9-817A-DB02B38288BC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{053C8F37-96EA-48E9-817A-DB02B38288BC}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
