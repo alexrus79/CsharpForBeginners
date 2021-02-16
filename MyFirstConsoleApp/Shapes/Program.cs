@@ -6,10 +6,21 @@ namespace Shapes
     {
         static void Main(string[] args)
         {
-            ThreeDCircle o = new ThreeDCircle();
-            o.Draw();
-            // This calls the Draw() method of the parent!
-            ((Circle)o).Draw();
+            object[] things = new object[4];
+            things[0] = new Hexagon();
+            things[1] = false;
+            things[2] = 10;
+            things[3] = "Last thing";
+            foreach (object item in things)
+            {
+                Hexagon h = item as Hexagon;
+                if (h == null)
+                    Console.WriteLine("Item is not a hexagon");
+                else
+                {
+                    h.Draw();
+                }
+            }
         }
     }
 }
