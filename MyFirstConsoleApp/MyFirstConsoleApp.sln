@@ -5,7 +5,7 @@ VisualStudioVersion = 16.0.30907.101
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HomeWorkOne", "HomeWorkOne\HomeWorkOne.csproj", "{401A6CEC-66FB-4C2A-B81B-4E22CAF12250}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HomeWorkTwo", "HomeWorkTwo\HomeWorkTwo.csproj", "{8D2D52D1-B7E8-4E3F-88E1-314A2BCC391F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BlackJack", "HomeWorkTwo\BlackJack.csproj", "{8D2D52D1-B7E8-4E3F-88E1-314A2BCC391F}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CSharp_Troelsen", "CSharp_Troelsen\CSharp_Troelsen.csproj", "{831E5543-EDED-4DFE-BDBA-C7AE88CAA246}"
 EndProject
