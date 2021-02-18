@@ -8,14 +8,14 @@ namespace HomeWork
         private int _id;
         private int _size;
         private string _name;
-        private int _idShowCase;
+        private ShowCase _ShowCase = null;
         
 
         public Product() 
         {
             _id = ++_quantity;
             _size = 1;
-            _name = "NoName";
+            _name = "NoName";            
         }
         public Product(int sizeProduct, string nameProduct)
         {
@@ -24,7 +24,7 @@ namespace HomeWork
             _name = nameProduct;
         }
 
-        public int idShowCase { get; set; }
+        
         public int size
         {
             get => _size;
@@ -36,19 +36,37 @@ namespace HomeWork
                     _size = value;
             }
         }
-        public void AddToShowCase()
+        public ShowCase ShowCase
         {
-
+            get {return _ShowCase; }
+            set { _ShowCase = value; }
         }
-        public void DelFromShowCase()
-        {
-            
-        }
-
+        public string Name { get => _name; }
+        public int ID { get => _id; }
         public void GetInfo()
         {
-            Console.WriteLine("ID: {0} Product: {1} size: {2}", _id, _name, _size);
+            Console.WriteLine("ID: {0} Product: {1} size: {2} ShowCaseID: {3}", _id, _name, _size, this.ShowCase?.id ?? 0);
         }
-      
+
+        public bool PlaceProduct(ShowCase showCase)
+        {
+            if (_ShowCase == null)
+            {
+                return (showCase.PlaceProduct(this));
+            }
+            else
+                return false;
+        }
+
+        public bool DelProduct(ShowCase showCase)
+        {
+            if (_ShowCase == showCase)
+            {
+                return (showCase.DelProduct(this));
+            }
+            else
+                return false;
+        }
+
     }
 }

@@ -1,25 +1,56 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace HomeWork
 {
     class ShowCase
     {
         private static int _quantity;
-        public readonly int _id;
+        private int _id;
         private int _capacity;
-        Product[] products = new Product[100];
-
+        private List<Product> productsList = new List<Product>();
         public ShowCase()
         {
             _capacity = 100;
             _id = ++_quantity;
         }
-
-        public void Info()
+        public int id 
         {
-            Console.WriteLine(_id + " " + _capacity);
+            get => _id;
         }
-        
+        public void GetInfo()
+        {
+            Console.WriteLine("ShowCaseID: {0} Free Space: {1}", _id, _capacity);
+            foreach (var product in productsList)
+            {
+                Console.WriteLine("Product: " + product.Name + " ID: " + product.ID + " Size: " + product.size);
+            }
+        }
+        public bool PlaceProduct(Product product)
+        {
+            if (product.ShowCase == null && _capacity >= product.size)
+            {
+                productsList.Add(product);
+                _capacity = _capacity - product.size;
+                product.ShowCase = this;
+                return true;
+            }
+            else
+                return false;
+        }
+
+        public bool DelProduct(Product product)
+        {
+            if (product.ShowCase == this)
+            {
+                product.ShowCase = null;
+                _capacity = _capacity + product.size;
+                return (productsList.Remove(product));
+            }
+            else
+                return false;
+        }
+
     }
 
 }
