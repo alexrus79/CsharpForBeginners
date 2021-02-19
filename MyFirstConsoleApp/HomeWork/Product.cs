@@ -7,8 +7,8 @@ namespace HomeWork
     {
         #region Fields
         private static int _quantity;
-        private static int _allProductInShowCases;
-        private static int _allProductInWarehouse;
+        private static int _countProductInShowCases;
+        private static int _countProductInWarehouse;
         private static List<Product> _allProduct = new List<Product>();
         private int _id;
         private int _size;
@@ -20,7 +20,7 @@ namespace HomeWork
         public Product() 
         {
             _id = ++_quantity;
-            ++_allProductInWarehouse;
+            ++_countProductInWarehouse;
             _size = 1;
             _name = "NoName";
             _allProduct.Add(this);
@@ -28,7 +28,7 @@ namespace HomeWork
         public Product(int sizeProduct, string nameProduct)
         {
             _id = ++_quantity;
-            ++_allProductInWarehouse;
+            ++_countProductInWarehouse;
             Size = sizeProduct;
             _name = nameProduct;
             _allProduct.Add(this);
@@ -36,8 +36,8 @@ namespace HomeWork
         #endregion
 
         public static int Quantity { get => _quantity; }
-        public static int AllProductInShowCases { get => _allProductInShowCases; }
-        public static int AllProductInWarehouse { get => _allProductInWarehouse; }
+        public static int AllProductInShowCases { get => _countProductInShowCases; }
+        public static int AllProductInWarehouse { get => _countProductInWarehouse; }
         public int Size
         {
             get => _size;
@@ -75,8 +75,8 @@ namespace HomeWork
         {
             if (_ShowCase == null)
             {
-                --_allProductInWarehouse;
-                ++_allProductInShowCases;
+                --_countProductInWarehouse;
+                ++_countProductInShowCases;
                 return (showCase.PlaceProductInShowCase(this));
             }
             else
@@ -87,27 +87,26 @@ namespace HomeWork
         {
             if (_ShowCase == showCase)
             {
-                ++_allProductInWarehouse;
-                --_allProductInShowCases;
+                ++_countProductInWarehouse;
+                --_countProductInShowCases;
                 return (showCase.RemoveProductFromShowCase(this));
             }
             else
                 return false;
         }
-        public bool DelProductFromBase()
+        public static bool DelProductFromBase(Product product)
         {
-            if (_ShowCase != null && RemoveProduct(_ShowCase))
+            if (product._ShowCase != null && product.RemoveProduct(product._ShowCase))
             {
-                _id = 0;
-                --_quantity;
-                --_allProductInWarehouse;
+                _allProduct.Remove(product);
+                --_countProductInWarehouse;
+
                 return true;
             } 
-            else if (_ShowCase == null)
+            else if (product._ShowCase == null)
             {
-                _id = 0;
-                --_quantity;
-                --_allProductInWarehouse;
+                _allProduct.Remove(product);
+                --_countProductInWarehouse;
                 return true;
             }
             return false;

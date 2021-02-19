@@ -149,6 +149,38 @@ namespace HomeWork
                 ShowCaseDeleteMenu();
             }
         }
+        static void ShowProductsMenu()
+        {
+            Console.Clear();
+            Console.WriteLine("Всего товаров: {0} [Из них на складе: {1}] [На витринах: {2}]",
+                Product.Quantity, Product.AllProductInWarehouse, Product.AllProductInShowCases);
+            Console.WriteLine();
+            Console.WriteLine("1. Товары на складе");
+            Console.WriteLine("2. Товары на витринах");
+            Console.WriteLine("3. Добавить товар");
+            Console.WriteLine("4. Назад");
+            ConsoleKeyInfo consoleKey;
+            consoleKey = Console.ReadKey(true);
+
+            switch (consoleKey.KeyChar.ToString())
+            {
+                case "1":
+                    ShowProductsFromWarehouse();
+                    break;
+                case "2":
+                    break;
+                case "3":
+                    break;
+                default:
+                    MainMenu();
+                    break;
+            }
+
+        }
+        static void ShowProductsFromWarehouse()
+        {
+            Product.
+        }
     }
 
 }
