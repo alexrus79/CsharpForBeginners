@@ -40,8 +40,17 @@ namespace HomeWork
             Console.WriteLine();
             Product.GetInfoAllProduct();
 
+            product1.PlaceProduct(showCase1);
+            product2.PlaceProduct(showCase1);
+            product3.PlaceProduct(showCase1);
+            product4.PlaceProduct(showCase1);
 
+            product5.PlaceProduct(showCase2);
+            product6.PlaceProduct(showCase2);
+            product7.PlaceProduct(showCase3);
+            product8.PlaceProduct(showCase4);
 
+            ShowCase.GetInfoAllShowCases();
         }
     }
 }
