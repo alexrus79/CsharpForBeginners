@@ -5,7 +5,6 @@ namespace HomeWork
 {
     class ShowCase
     {
-        private static int _quantity;
         private static List<ShowCase> _allShowCaseList = new List<ShowCase>();
         private int _id;
         private int _capacity;
@@ -13,10 +12,11 @@ namespace HomeWork
         
         public ShowCase()
         {
-            _capacity = 100;
-            _id = ++_quantity;
+            _capacity = 100;            
             _allShowCaseList.Add(this);
+            _id = _allShowCaseList.Count;
         }
+        public static int Quantity { get => _allShowCaseList.Count; }
         public int id
         {
             get => _id;
@@ -52,21 +52,45 @@ namespace HomeWork
         }
         public static void GetInfoAllShowCases()
         {
-            Console.WriteLine("Всего найдено витрин:" + _quantity);
+            Console.WriteLine("Всего найдено витрин:" + _allShowCaseList.Count);
             foreach (var showCase in _allShowCaseList)
             {               
-                Console.WriteLine("ShowCaseID: {0} Free Space: {1} All products {2}", showCase._id, showCase._capacity, showCase._productsList.Count);
+                Console.WriteLine("ID витрины: {0}\tСвободное место: {1}\tВсего товаров {2}", showCase._id, showCase._capacity, showCase._productsList.Count);
             }
         }
         public void GetProductsFromThisShowCase()
         {
-            Console.WriteLine("Всего найдено товаров:" + Product.Quantity);
+            Console.WriteLine("Размещено товаров на витрине:" + _productsList.Count);
+            Console.WriteLine();
             foreach (var product in _productsList)
             {             
                 Console.WriteLine("Product: " + product.Name + " ID: " + product.ID + " Size: " + product.Size);
             }
         }
 
+        public static bool DeleteShowCaseFromBase(ShowCase showCase)
+        {
+            if (showCase._productsList.Count > 0)
+            {
+                return false;
+            }
+            else if(_allShowCaseList.Remove(showCase))
+            {
+                return true;
+            }
+            return false;
+        }
+        public static ShowCase GetShowCaseFromID(int id)
+        {
+            foreach (var showCase in _allShowCaseList)
+            {
+                if (showCase._id == id)
+                {
+                    return showCase;
+                }
+            }
+            return null;
+        }
     }
 
 }

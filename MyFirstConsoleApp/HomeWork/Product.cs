@@ -7,6 +7,8 @@ namespace HomeWork
     {
         #region Fields
         private static int _quantity;
+        private static int _allProductInShowCases;
+        private static int _allProductInWarehouse;
         private static List<Product> _allProduct = new List<Product>();
         private int _id;
         private int _size;
@@ -18,6 +20,7 @@ namespace HomeWork
         public Product() 
         {
             _id = ++_quantity;
+            ++_allProductInWarehouse;
             _size = 1;
             _name = "NoName";
             _allProduct.Add(this);
@@ -25,6 +28,7 @@ namespace HomeWork
         public Product(int sizeProduct, string nameProduct)
         {
             _id = ++_quantity;
+            ++_allProductInWarehouse;
             Size = sizeProduct;
             _name = nameProduct;
             _allProduct.Add(this);
@@ -32,6 +36,8 @@ namespace HomeWork
         #endregion
 
         public static int Quantity { get => _quantity; }
+        public static int AllProductInShowCases { get => _allProductInShowCases; }
+        public static int AllProductInWarehouse { get => _allProductInWarehouse; }
         public int Size
         {
             get => _size;
@@ -69,6 +75,8 @@ namespace HomeWork
         {
             if (_ShowCase == null)
             {
+                --_allProductInWarehouse;
+                ++_allProductInShowCases;
                 return (showCase.PlaceProductInShowCase(this));
             }
             else
@@ -79,6 +87,8 @@ namespace HomeWork
         {
             if (_ShowCase == showCase)
             {
+                ++_allProductInWarehouse;
+                --_allProductInShowCases;
                 return (showCase.RemoveProductFromShowCase(this));
             }
             else
@@ -86,28 +96,21 @@ namespace HomeWork
         }
         public bool DelProductFromBase()
         {
-            if (_ShowCase != null)
+            if (_ShowCase != null && RemoveProduct(_ShowCase))
             {
-                if (RemoveProduct(_ShowCase))
-                {
-                    _id = 0;
-                    --_quantity;
-                    return true;
-                }
-                else
-                    return false;
+                _id = 0;
+                --_quantity;
+                --_allProductInWarehouse;
+                return true;
             } 
-            else
+            else if (_ShowCase == null)
             {
-                if (RemoveProduct(_ShowCase))
-                {
-                    _id = 0;
-                    --_quantity;
-                    return true;
-                }
-                else
-                    return false;
+                _id = 0;
+                --_quantity;
+                --_allProductInWarehouse;
+                return true;
             }
+            return false;
         }
         #endregion
     }
