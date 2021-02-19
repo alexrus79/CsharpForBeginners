@@ -8,7 +8,7 @@ namespace HomeWork
     {
         private enum GreatMenu
         {
-            Работа            
+            
         }
         private enum ProductMenu
         {

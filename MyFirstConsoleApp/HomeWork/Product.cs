@@ -52,7 +52,7 @@ namespace HomeWork
         {
             if (_ShowCase == null)
             {
-                return (showCase.PlaceProduct(this));
+                return (showCase.PlaceProductInThisShowCase(this));
             }
             else
                 return false;
@@ -62,7 +62,7 @@ namespace HomeWork
         {
             if (_ShowCase == showCase)
             {
-                return (showCase.DelProduct(this));
+                return (showCase.RemeveProductFromThisShowCase(this));
             }
             else
                 return false;
