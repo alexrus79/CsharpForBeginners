@@ -6,22 +6,39 @@ namespace HomeWork
     {
         static void Main()
         {
-            ShowCase shopWindow1 = new ShowCase();
-            ShowCase shopWindow2 = new ShowCase();
-            Product product1 = new Product(50, "Milk");
-            Product product2 = new Product(40, "Fish");
+            ShowCase showCase1 = new ShowCase();
+            ShowCase showCase2 = new ShowCase();
+            ShowCase showCase3 = new ShowCase();
+            ShowCase showCase4 = new ShowCase();
+            
+            Product product1 = new Product();
+            Product product2 = new Product();
+            Product product3 = new Product();
+            Product product4 = new Product();
+            Product product5 = new Product();
+            Product product6 = new Product();
+            Product product7 = new Product();
+            Product product8 = new Product();
 
-            shopWindow1.PlaceProduct(product1);
-            shopWindow1.PlaceProduct(product2);
-            shopWindow1.GetInfo();
-            product1.GetInfo();
-            product2.GetInfo();
+            product1.PlaceProduct(showCase1);
+            product2.PlaceProduct(showCase1);
+            product3.PlaceProduct(showCase1);
+            product4.PlaceProduct(showCase1);
+
+            product5.PlaceProduct(showCase2);
+            product6.PlaceProduct(showCase2);
+            product7.PlaceProduct(showCase3);
+            product8.PlaceProduct(showCase4);
+
+            ShowCase.GetInfoAllShowCases();
             Console.WriteLine();
-            shopWindow1.DelProduct(product1);
-            shopWindow1.GetInfo();
-            product1.GetInfo();
-            product2.GetInfo();
-
+            Product.GetInfoAllProduct();
+            Console.WriteLine();
+            product1.DelProductFromBase();
+            Console.WriteLine();
+            ShowCase.GetInfoAllShowCases();
+            Console.WriteLine();
+            Product.GetInfoAllProduct();
 
 
 
