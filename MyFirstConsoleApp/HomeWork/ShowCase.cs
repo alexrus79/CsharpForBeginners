@@ -8,8 +8,7 @@ namespace HomeWork
         private static List<ShowCase> _allShowCaseList = new List<ShowCase>();
         private int _id;
         private int _capacity;
-        private List<Product> _productsList = new List<Product>(); // Product list in this ShowCase
-        
+        private List<Product> _productsList = new List<Product>(); // Product list in this ShowCase        
         public ShowCase()
         {
             _capacity = 100;            
@@ -17,10 +16,12 @@ namespace HomeWork
             _id = _allShowCaseList.Count;
         }
         public static int Quantity { get => _allShowCaseList.Count; }
-        public int id
+        public int Id
         {
             get => _id;
         }
+        public int ProductCount { get => _productsList.Count; }
+        public int Capacity { get => _capacity; }
         public void GetInfo()
         {
             Console.WriteLine("ShowCaseID: {0} Free Space: {1}", _id, _capacity);
@@ -38,7 +39,6 @@ namespace HomeWork
             else
                 return false;
         }
-
         public bool RemoveProductFromShowCase(Product product)
         {
             if (product.ShowCase == this)
@@ -49,15 +49,7 @@ namespace HomeWork
             }
             else
                 return false;
-        }
-        public static void GetInfoAllShowCases()
-        {
-            Console.WriteLine("Всего найдено витрин:" + _allShowCaseList.Count);
-            foreach (var showCase in _allShowCaseList)
-            {               
-                Console.WriteLine("ID витрины: {0}\tСвободное место: {1}\tВсего товаров {2}", showCase._id, showCase._capacity, showCase._productsList.Count);
-            }
-        }
+        }        
         public void GetProductsFromThisShowCase()
         {
             Console.WriteLine("Размещено товаров на витрине:" + _productsList.Count);
@@ -67,18 +59,17 @@ namespace HomeWork
                 Console.WriteLine("Product: " + product.Name + " ID: " + product.ID + " Size: " + product.Size);
             }
         }
-
-        public static bool DeleteShowCaseFromBase(ShowCase showCase)
+        public static int GetLastId()
         {
-            if (showCase._productsList.Count > 0)
-            {
-                return false;
+            int id = 0;
+            foreach (var showCase in _allShowCaseList)
+            {                
+                if (showCase._id > id)
+                {
+                    id = showCase._id;
+                }
             }
-            else if(_allShowCaseList.Remove(showCase))
-            {
-                return true;
-            }
-            return false;
+            return id;
         }
         public static ShowCase GetShowCaseFromID(int id)
         {
@@ -90,6 +81,33 @@ namespace HomeWork
                 }
             }
             return null;
+        }
+        public static void GetGlobalInfo()
+        {
+            Console.WriteLine("Всего витрин: {0}", Quantity);
+            Console.WriteLine("Всего товаров: {0} [Из них на складе: {1}] [На витринах: {2}]",
+                Product.Quantity, Product.AllProductInWarehouse, Product.AllProductInShowCases);
+            Console.WriteLine();
+        }
+        public static void GetInfoAllShowCases()
+        {
+            Console.WriteLine("Всего найдено витрин:" + _allShowCaseList.Count);
+            foreach (var showCase in _allShowCaseList)
+            {
+                Console.WriteLine("ID витрины: {0}\tСвободное место: {1}\tВсего товаров {2}", showCase._id, showCase._capacity, showCase._productsList.Count);
+            }
+        }
+        public static bool DeleteShowCaseFromBase(ShowCase showCase)
+        {
+            if (showCase._productsList.Count > 0)
+            {
+                return false;
+            }
+            else if (_allShowCaseList.Remove(showCase))
+            {
+                return true;
+            }
+            return false;
         }
     }
 
