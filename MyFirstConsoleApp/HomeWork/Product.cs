@@ -32,13 +32,20 @@ namespace HomeWork
             Name = nameProduct;
             _allProduct.Add(this);
             _id = _allProduct.Count;
-            _cost = costProduct;
+            Cost = costProduct;
         }
         #endregion
         public static int Quantity { get => _allProduct.Count; }
         public static int AllProductInShowCases { get => _countProductInShowCases; }
         public static int AllProductInWarehouse { get => _countProductInWarehouse; }
-        public int Cost { get; }
+        public double Cost 
+        {
+            get => _cost; 
+            set
+            {
+                _cost = value;
+            }
+        }
         public int Size
         {
             get => _size;
@@ -72,31 +79,34 @@ namespace HomeWork
                     int temp = value.Length - 15;
                     _name = value.Substring(0, value.Length - temp);
                 }
+                else
+                    _name = value;
             }
         }
         public int ID { get => _id; }
         #region Methods
-        public void GetInfo()
+        public static void GetInfo(Product product)
         {
             int pad = 0;
             string productName = "";
-            if (_name == null)
+            if (product._name == null)
             {
                 productName = productName.PadRight(10);
             }
             else
             {
-                pad = 20 - _name.Length;
-                productName = _name.PadRight(pad);
+                pad = 20 - product._name.Length;
+                productName = product._name.PadRight(pad);
             }
-            Console.WriteLine("ID: {0}\tТовар: {1}\tразмер: {2}\tID витрины: {3}", _id, productName, _size, ShowCase?.Id ?? 0);
+            Console.WriteLine("ID: {0}\tТовар: {1}\tразмер: {2}\tID витрины: {3}", product._id, productName, product._size, product.ShowCase?.Id ?? 0);
         }
         public static void GetInfoAllProduct()
         {
-            Console.WriteLine("Всего найдено товаров:" + Quantity);
+            Console.WriteLine("Всего найдено товаров:" + _allProduct.Count);
+            Console.WriteLine();
             foreach (var product in _allProduct)
             {
-                product.GetInfo();
+                GetInfo(product);
             }
         }
         public bool PlaceProduct(ShowCase showCase)
@@ -134,13 +144,25 @@ namespace HomeWork
         }
         public static void GetProductsInWarehouse()
         {
-            Console.WriteLine("Товаров на складе: {0}", _countProductInWarehouse);
-
+            Console.WriteLine("Всего товаров на складе: {0}", _countProductInWarehouse);
+            Console.WriteLine();
             foreach (var product in _allProduct)
             {
                 if (product._showCase == null)
                 {
-                    product.GetInfo();
+                    GetInfo(product);
+                }
+            }
+        }
+        public static void GetProductsInShowCase()
+        {
+            Console.WriteLine("Всего товаров на витринах: {0}", _countProductInShowCases);
+            Console.WriteLine();
+            foreach (var product in _allProduct)
+            {
+                if (product._showCase != null)
+                {
+                    GetInfo(product);
                 }
             }
         }
