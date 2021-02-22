@@ -4,7 +4,7 @@ using System.Text;
 
 namespace HomeWork
 {
-    class Menu
+    class Core
     {
         private enum Methods
         {
@@ -16,12 +16,16 @@ namespace HomeWork
             MenuProduct,
             MenuAddProductToBase,
             MenuProductsInWarehouse,
+            MenuChoiceProductForEdit,
+            MenuEditProduct,
             MenuProductsInShowCases,
             Exit
         }
         private static Methods method = Methods.MainMenu;
         private static Methods? returnToMethod = null;
         private static ShowCase tempShowCase;
+        private static Product tempProduct;
+        private static string tempString = null;
         public static void Start()
         {
             do
@@ -54,6 +58,12 @@ namespace HomeWork
                         break;
                     case Methods.MenuAddProductToBase:
                         MenuAddProductToBase();
+                        break;
+                    case Methods.MenuChoiceProductForEdit:
+                        MenuChoiceProductForEdit();
+                        break;
+                    case Methods.MenuEditProduct:
+                        MenuEditProduct(tempProduct, tempString);
                         break;
                     default:
                         break;
@@ -113,15 +123,14 @@ namespace HomeWork
             switch (consoleKey.KeyChar.ToString())
             {
                 case "1":
-                    ShowCase showCases = DialogGetShowCase();
-                    if (showCases == null)
+                    tempShowCase = DialogGetShowCase();
+                    if (tempShowCase == null)
                     {
                         method = Methods.MenuShowCases;
                         break;
                     }
                     else
                     {
-                        tempShowCase = showCases;
                         method = Methods.MenuEditShowCase;
                         break;
                     }
@@ -188,6 +197,7 @@ namespace HomeWork
                     break;
                 case "5":
                     method = Methods.MenuShowCases;
+                    tempShowCase = null;
                     break;
                 case "6":
                     method = Methods.Exit;
@@ -233,29 +243,145 @@ namespace HomeWork
                     break;
             }
         }
-        private static void MenuEditProduct()
+        private static void MenuChoiceProductForEdit()
         {
-            Console.WriteLine("1. Разместить товар на витрине");
-            Console.WriteLine("2. Удалить товар");
-            Console.WriteLine("5. Назад");
-            Console.WriteLine("6. Выход");
-            ConsoleKeyInfo consoleKey;
-            consoleKey = Console.ReadKey(true);
-            switch (consoleKey.KeyChar.ToString())
+            Console.Clear();
+            Console.WriteLine();
+            Product.GetProductsInWarehouse();
+            Console.WriteLine();
+            Product product = DialogGetProduct();
+            if (product == null)
             {
-                case "1":
-                    break;
-                case "2":
-                    DialogDeleteProductFromBase();
-                    break;
-                case "5":
-                    MenuProduct();
-                    break;
-                case "6":
-                    break;
-                default:
-                    MenuProductsInWarehouse();
-                    break;
+                Console.WriteLine("Товар не найден! Нажмите Enter для повтора или ESC для возврата в меню...");
+                ConsoleKey consoleKey;
+                consoleKey = Console.ReadKey(true).Key;
+                while (consoleKey != ConsoleKey.Enter || consoleKey != ConsoleKey.Escape)
+                {
+                    if (consoleKey == ConsoleKey.Escape)
+                    {
+                        method = Methods.MenuProductsInWarehouse;
+                        return;
+                    }
+                    if (consoleKey == ConsoleKey.Enter)
+                    {
+                        method = Methods.MenuChoiceProductForEdit;
+                        return;
+                    }
+                    consoleKey = Console.ReadKey(true).Key;
+                }
+            }
+            else if (product.ShowCase != null)
+            {
+                Console.WriteLine("Нельзя редактировать товар на витрине! Нажмите Enter для повтора или ESC для возврата в меню...");
+                ConsoleKey consoleKey;
+                consoleKey = Console.ReadKey(true).Key;
+                while (consoleKey != ConsoleKey.Enter || consoleKey != ConsoleKey.Escape)
+                {
+                    if (consoleKey == ConsoleKey.Escape)
+                    {
+                        method = Methods.MenuProductsInWarehouse;
+                        return;
+                    }
+                    if (consoleKey == ConsoleKey.Enter)
+                    {
+                        method = Methods.MenuChoiceProductForEdit;
+                        return;
+                    }
+                    consoleKey = Console.ReadKey(true).Key;
+                }
+            }
+            else
+            {
+                tempProduct = product;
+                method = Methods.MenuEditProduct;
+                return;
+            }
+
+        }
+        private static void MenuEditProduct(Product product, string whatEdit = null)
+        {
+            Console.Clear();
+            Console.WriteLine();
+            Product.GetInfo(product);
+            Console.WriteLine();
+            try
+            {
+                if (whatEdit == null)
+                {
+                    Console.WriteLine("1. Редактировать наименование");
+                    Console.WriteLine("2. Редактировать размер");
+                    Console.WriteLine("3. Редактировать стоимость");
+                    Console.WriteLine("5. Назад");
+                    Console.WriteLine("6. Выход");
+                    ConsoleKeyInfo consoleKey;
+                    consoleKey = Console.ReadKey(true);
+                    switch (consoleKey.KeyChar.ToString())
+                    {
+                        case "1":
+                            method = Methods.MenuEditProduct;
+                            tempString = "Name";
+                            break;
+                        case "2":
+                            method = Methods.MenuEditProduct;
+                            tempString = "Size";
+                            break;
+                        case "3":
+                            method = Methods.MenuEditProduct;
+                            tempString = "Cost";
+                            break;
+                        case "5":
+                            method = Methods.MenuChoiceProductForEdit;
+                            tempProduct = null;
+                            break;
+                        case "6":
+                            method = Methods.Exit;
+                            break;
+                        default:
+                            method = Methods.MenuEditProduct;
+                            break;
+                    }
+
+                }
+                else if (whatEdit == "Name")
+                {
+                    Console.Write("Введите новое наименование товара(не более 15 символов) и нажмите Enter: ");
+                    string nameProduct = Console.ReadLine();
+                    product.Name = nameProduct;
+                    method = Methods.MenuEditProduct;
+                    tempString = null;
+                    tempProduct = product;
+                    return;
+                }
+                else if (whatEdit == "Size")
+                {
+                    Console.Write("Введите размер товара(1-100): ");
+                    string sizeString = Console.ReadLine();
+                    int size = Convert.ToInt32(sizeString);
+                    product.Size = size;
+                    method = Methods.MenuEditProduct;
+                    tempString = null;
+                    tempProduct = product;
+                    return;
+                }
+                else if (whatEdit == "Cost")
+                {
+                    Console.Write("Текущая стоимость: {0}. Введите новую стомость: ", product.Cost);
+                    string costString = Console.ReadLine();
+                    double cost = Convert.ToDouble(costString);
+                    cost = Math.Round(cost, 2);
+                    product.Cost = cost;
+                    method = Methods.MenuEditProduct;
+                    tempString = null;
+                    tempProduct = product;
+                    return;
+                }
+            }
+            catch (Exception)
+            {
+                method = Methods.MenuEditProduct;
+                tempString = null;
+                tempProduct = product;
+                return;
             }
         }
         private static void MenuRemovProductFromShowCase(ShowCase showCase)
@@ -264,7 +390,7 @@ namespace HomeWork
             Console.WriteLine();
             showCase.GetInfo();
             Console.WriteLine();
-            Product product = DialogGetProduct(showCase);
+            Product product = DialogGetProduct();
             if (product == null || product.ShowCase != showCase)
             {
                 Console.WriteLine("Товар не найден! Нажмите Enter для повтора или ESC для возврата в меню...");
@@ -390,7 +516,7 @@ namespace HomeWork
                 }
             }
         }
-        private static Product DialogGetProduct(ShowCase showCase = null)
+        private static Product DialogGetProduct()
         {
             Console.Write("Введите ID товара и нажмите Enter: ");
             string idProduct = Console.ReadLine();
@@ -483,12 +609,45 @@ namespace HomeWork
             {
                 case "1":
                     tempShowCase = DialogGetShowCase();
-                    returnToMethod = Methods.MenuProductsInWarehouse;
-                    method = Methods.MenuAddProductToShowCase;
-                    break;
-                case "2":
+                    if (tempShowCase == null)
+                    {
+                        method = Methods.MenuProductsInWarehouse;
+                        break;
+                    }
+                    else
+                    {
+                        method = Methods.MenuAddProductToShowCase;
+                        returnToMethod = Methods.MenuProductsInWarehouse;
+                        break;
+                    }
+                case "2":                    
+                    method = Methods.MenuChoiceProductForEdit;
                     break;
                 case "3":
+                    tempProduct = DialogGetProduct();
+                    if (tempProduct == null)
+                    {
+                        Console.WriteLine("Товар не найден. Нажмите Enter для возврата...");
+                        Console.ReadLine();
+                        method = Methods.MenuProductsInWarehouse;
+                        break;
+                    }
+                    else if(tempProduct.ShowCase != null)
+                    {
+                        Console.WriteLine("Нельзя удалить товар размещённый на витрине. Нажмите Enter для возврата...");
+                        Console.ReadLine();
+                        method = Methods.MenuProductsInWarehouse;
+                        tempProduct = null;
+                        break;
+                    }
+                    else if (Product.DelProductFromBase(tempProduct))
+                    {
+                        Console.WriteLine("Товар успешно удален. Нажмите Enter для возврата...");
+                        Console.ReadLine();
+                        method = Methods.MenuProductsInWarehouse;
+                        tempProduct = null;
+                        break;
+                    }
                     break;
                 case "5":
                     method = Methods.MenuProduct;

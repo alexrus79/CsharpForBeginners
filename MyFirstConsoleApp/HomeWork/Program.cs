@@ -25,7 +25,7 @@ namespace HomeWork
             product2.PlaceProduct(showCase1);
             product3.PlaceProduct(showCase1);
 
-            Menu.Start();
+            Core.Start();
         }
     }
 }
