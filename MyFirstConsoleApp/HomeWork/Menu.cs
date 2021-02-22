@@ -14,11 +14,13 @@ namespace HomeWork
             MenuRemovProductFromShowCase,
             MenuAddProductToShowCase,
             MenuProduct,
+            MenuAddProductToBase,
             MenuProductsInWarehouse,
             MenuProductsInShowCases,
             Exit
         }
         private static Methods method = Methods.MainMenu;
+        private static Methods? returnToMethod = null;
         private static ShowCase tempShowCase;
         public static void Start()
         {
@@ -30,7 +32,6 @@ namespace HomeWork
                         MainMenu();
                         break;
                     case Methods.MenuShowCases:
-                        //MenuShowCases();
                         MenuShowCases();
                         break;
                     case Methods.MenuProduct:
@@ -43,13 +44,16 @@ namespace HomeWork
                         MenuRemovProductFromShowCase(tempShowCase);
                         break;
                     case Methods.MenuAddProductToShowCase:
-                        MenuAddProductToShowCase(tempShowCase);
+                        MenuAddProductToShowCase(tempShowCase, returnToMethod);
                         break;
                     case Methods.MenuProductsInWarehouse:
                         MenuProductsInWarehouse();
                         break;
                     case Methods.MenuProductsInShowCases:
                         MenuProductsInShowCases();
+                        break;
+                    case Methods.MenuAddProductToBase:
+                        MenuAddProductToBase();
                         break;
                     default:
                         break;
@@ -216,6 +220,7 @@ namespace HomeWork
                     method = Methods.MenuProductsInShowCases;
                     break;
                 case "3":
+                    method = Methods.MenuAddProductToBase;
                     break;
                 case "5":
                     method = Methods.MainMenu;
@@ -262,13 +267,13 @@ namespace HomeWork
             Product product = DialogGetProduct(showCase);
             if (product == null || product.ShowCase != showCase)
             {
-                Console.WriteLine("Товар не найден!. Нажмите Enter для повтора или ESC для возврата в меню...");
+                Console.WriteLine("Товар не найден! Нажмите Enter для повтора или ESC для возврата в меню...");
                 UserInput(showCase);
                 return;
             }
             else if (product != null && product.RemoveProduct(showCase))
             {
-                Console.WriteLine("Товар удален!. Нажмите Enter для повтора или ESC для возврата в меню...");
+                Console.WriteLine("Товар удален! Нажмите Enter для повтора или ESC для возврата в меню...");
                 UserInput(showCase);
                 return;
             }
@@ -310,12 +315,12 @@ namespace HomeWork
             ShowCase showCase = DialogGetShowCase();
             if (showCase == null)
             {
-                Console.WriteLine("Витрина не найдена!. Нажмите Enter для возврата в меню...");
+                Console.WriteLine("Витрина не найдена! Нажмите Enter для возврата в меню...");
                 Console.ReadLine();
             }
             else if (ShowCase.DeleteShowCaseFromBase(showCase))
             {
-                Console.WriteLine("Витрина удалена. Нажмите Enter для возврата в меню...");
+                Console.WriteLine("Витрина удалена! Нажмите Enter для возврата в меню...");
                 Console.ReadLine();
             }
             else
@@ -324,41 +329,41 @@ namespace HomeWork
                 Console.ReadLine();
             }
         }
-        private static void MenuAddProductToShowCase(ShowCase showCase)
+        private static void MenuAddProductToShowCase(ShowCase showCase, Methods? returnToMethod = null)
         {
             Console.Clear();
             Console.WriteLine();
             showCase.GetInfo();
             Console.WriteLine();
-            Product.ShowProductsInWarehouse();
+            Product.GetProductsInWarehouse();
             Console.WriteLine();
             Product product = DialogGetProduct();
             if (product == null)
             {
                 Console.WriteLine("Товар не найден! Нажмите Enter для повтора или ESC для возврата в меню...");
-                UserInput(showCase);
+                UserInput(showCase, returnToMethod);
                 return;
             }
             else if (product.ShowCase == showCase)
             {
                 Console.WriteLine("Товар уже размещен на этой витрине! Нажмите Enter для повтора или ESC для возврата в меню...");
-                UserInput(showCase);
+                UserInput(showCase, returnToMethod);
                 return;
             }
             else if (product.ShowCase != null)
             {
                 Console.WriteLine("Товар размещен на другой витрине! Нажмите Enter для повтора или ESC для возврата в меню...");
-                UserInput(showCase);
+                UserInput(showCase, returnToMethod);
                 return;
             }
             else if (product.PlaceProduct(showCase))
             {
                 Console.WriteLine("Товар размещен! Нажмите Enter для повтора или ESC для возврата в меню...");
-                UserInput(showCase);
+                UserInput(showCase, returnToMethod);
                 return;
             }
             return;
-            static void UserInput(ShowCase showCase)
+            static void UserInput(ShowCase showCase, Methods? returnToMethod = null)
             {
                 ConsoleKey consoleKey;
                 consoleKey = Console.ReadKey(true).Key;
@@ -368,7 +373,12 @@ namespace HomeWork
                     {
                         tempShowCase = showCase;
                         method = Methods.MenuEditShowCase;
-                        return;
+                        if (returnToMethod != null)
+                        {
+                            method = (Methods)returnToMethod;
+                            //returnToMethod = null;
+                        }
+                        return;                        
                     }
                     if (consoleKey == ConsoleKey.Enter)
                     {
@@ -382,7 +392,7 @@ namespace HomeWork
         }
         private static Product DialogGetProduct(ShowCase showCase = null)
         {
-            Console.Write("Введите ID товара и нажмите Enter :");
+            Console.Write("Введите ID товара и нажмите Enter: ");
             string idProduct = Console.ReadLine();
             try
             {
@@ -405,7 +415,7 @@ namespace HomeWork
         }
         private static ShowCase DialogGetShowCase()
         {
-            Console.Write("Введите ID витрины и нажмите Enter :");
+            Console.Write("Введите ID витрины и нажмите Enter: ");
             string idShowCase = Console.ReadLine();
             try
             {
@@ -430,7 +440,7 @@ namespace HomeWork
         private static void DialogDeleteProductFromBase()
         {
             Console.Clear();
-            Product.ShowProductsInWarehouse();
+            Product.GetProductsInWarehouse();
             Console.WriteLine();
             Product product = DialogGetProduct();
             if (product == null)
@@ -457,10 +467,72 @@ namespace HomeWork
         }
         private static void MenuProductsInWarehouse()
         {
+            returnToMethod = null;
+            Console.Clear();
+            Console.WriteLine();
+            Product.GetProductsInWarehouse();
+            Console.WriteLine();
+            Console.WriteLine("1. Разместить товар на витрине");
+            Console.WriteLine("2. Редактировать товар");
+            Console.WriteLine("3. Удалить товар");
+            Console.WriteLine("5. Назад");
+            Console.WriteLine("6. Выход");
+            ConsoleKeyInfo consoleKey;
+            consoleKey = Console.ReadKey(true);
+            switch (consoleKey.KeyChar.ToString())
+            {
+                case "1":
+                    tempShowCase = DialogGetShowCase();
+                    returnToMethod = Methods.MenuProductsInWarehouse;
+                    method = Methods.MenuAddProductToShowCase;
+                    break;
+                case "2":
+                    break;
+                case "3":
+                    break;
+                case "5":
+                    method = Methods.MenuProduct;
+                    break;                
+                case "6":
+                    method = Methods.Exit;
+                    break;
+                default:
+                    break;
+            }
 
         }
         private static void MenuProductsInShowCases()
         {
+
+        }
+        private static void MenuAddProductToBase()
+        {
+            Console.Clear();
+            Console.WriteLine();
+            Product.GetProductsInWarehouse();
+            Console.WriteLine();
+            
+            try
+            {
+                Console.Write("Введите наименование товара(не более 15 символов) и нажмите Enter: ");
+                string nameProduct = Console.ReadLine();
+
+                Console.Write("Введите размер товара(1-100): ");
+                string sizeString = Console.ReadLine();
+
+                Console.Write("Введите стомость товара: ");
+                string costString = Console.ReadLine();
+                int size = Convert.ToInt32(sizeString);
+                double cost = Convert.ToDouble(costString);
+                Product product = new Product(size, nameProduct, cost);
+                method = Methods.MenuProduct;
+                return;
+            }
+            catch (Exception)
+            {
+                method = Methods.MenuAddProductToBase;
+                return;
+            }
 
         }
     }

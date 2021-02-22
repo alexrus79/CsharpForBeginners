@@ -11,30 +11,34 @@ namespace HomeWork
         private static List<Product> _allProduct = new List<Product>();
         private int _id;
         private int _size;
+        private double _cost;
         private string _name;
         private ShowCase _showCase = null;
         #endregion
         #region Ctor
         public Product() 
-        {            
+        {
+            _cost = 0;
             ++_countProductInWarehouse;
             _size = 1;
-            _name = "NoName";
+            Name = "NoName";
             _allProduct.Add(this);
             _id = _allProduct.Count;
         }
-        public Product(int sizeProduct, string nameProduct)
+        public Product(int sizeProduct, string nameProduct, double costProduct)
         {
             ++_countProductInWarehouse;
             Size = sizeProduct;
-            _name = nameProduct;
+            Name = nameProduct;
             _allProduct.Add(this);
             _id = _allProduct.Count;
+            _cost = costProduct;
         }
         #endregion
         public static int Quantity { get => _allProduct.Count; }
         public static int AllProductInShowCases { get => _countProductInShowCases; }
         public static int AllProductInWarehouse { get => _countProductInWarehouse; }
+        public int Cost { get; }
         public int Size
         {
             get => _size;
@@ -42,6 +46,10 @@ namespace HomeWork
             {
                 if (value > 100)
                     _size = 100;
+                else
+                    _size = value;
+                if (value <= 0)
+                    _size = 1;
                 else
                     _size = value;
             }
@@ -54,12 +62,34 @@ namespace HomeWork
                 _showCase = value;
             }
         }
-        public string Name { get => _name; }
+        public string Name 
+        { 
+            get => _name;
+            set
+            {
+                if (value.Length > 15)
+                {
+                    int temp = value.Length - 15;
+                    _name = value.Substring(0, value.Length - temp);
+                }
+            }
+        }
         public int ID { get => _id; }
         #region Methods
         public void GetInfo()
         {
-            Console.WriteLine("ID: {0}\tProduct: {1}\tsize: {2}\tShowCaseID: {3}", _id, _name, _size, ShowCase?.Id ?? 0);
+            int pad = 0;
+            string productName = "";
+            if (_name == null)
+            {
+                productName = productName.PadRight(10);
+            }
+            else
+            {
+                pad = 20 - _name.Length;
+                productName = _name.PadRight(pad);
+            }
+            Console.WriteLine("ID: {0}\tТовар: {1}\tразмер: {2}\tID витрины: {3}", _id, productName, _size, ShowCase?.Id ?? 0);
         }
         public static void GetInfoAllProduct()
         {
@@ -102,7 +132,7 @@ namespace HomeWork
             }
             return null;
         }
-        public static void ShowProductsInWarehouse()
+        public static void GetProductsInWarehouse()
         {
             Console.WriteLine("Товаров на складе: {0}", _countProductInWarehouse);
 

@@ -54,9 +54,20 @@ namespace HomeWork
         {
             Console.WriteLine("Размещено товаров на витрине:" + _productsList.Count);
             Console.WriteLine();
+            int pad = 0;
             foreach (var product in _productsList)
-            {             
-                Console.WriteLine("Product: " + product.Name + " ID: " + product.ID + " Size: " + product.Size);
+            {
+                string productName = "";
+                if (product.Name == null)
+                {
+                    productName = productName.PadRight(10);
+                }
+                else
+                {
+                    pad = 20 - product.Name.Length;
+                    productName = product.Name.PadRight(pad);
+                }
+                Console.WriteLine("ID: " + product.ID + " \tТовар: " + productName  + " \tРазмер: " + product.Size + " \tСтоимость: " + product.Cost);
             }
         }
         public static int GetLastId()
