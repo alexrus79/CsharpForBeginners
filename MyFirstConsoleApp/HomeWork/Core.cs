@@ -119,6 +119,9 @@ namespace HomeWork
             switch (consoleKey.KeyChar.ToString())
             {
                 case "1":
+                    Console.Clear();
+                    ShowCase.GetInfoAllShowCases();
+                    Console.WriteLine();
                     tempShowCase = DialogGetShowCase();
                     if (tempShowCase == null)
                     {
