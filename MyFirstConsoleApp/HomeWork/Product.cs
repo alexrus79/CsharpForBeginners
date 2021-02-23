@@ -100,15 +100,6 @@ namespace HomeWork
             }
             Console.WriteLine("ID: {0}\tТовар: {1} \tразмер: {2}\tID витрины: {3}", product._id, productName, product._size, product.ShowCase?.Id ?? 0);
         }
-        public static void GetInfoAllProduct()
-        {
-            Console.WriteLine("Всего найдено товаров:" + _allProduct.Count);
-            Console.WriteLine();
-            foreach (var product in _allProduct)
-            {
-                GetInfo(product);
-            }
-        }
         public bool PlaceProduct(ShowCase showCase)
         {
             if (_showCase == null)
