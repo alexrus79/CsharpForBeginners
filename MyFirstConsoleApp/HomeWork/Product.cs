@@ -53,9 +53,7 @@ namespace HomeWork
             {
                 if (value > 100)
                     _size = 100;
-                else
-                    _size = value;
-                if (value <= 0)
+                else if (value <= 0)
                     _size = 1;
                 else
                     _size = value;

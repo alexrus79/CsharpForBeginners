@@ -110,16 +110,7 @@ namespace HomeWork
         }
         public static bool DeleteShowCaseFromBase(ShowCase showCase)
         {
-            if (showCase._productsList.Count > 0)
-            {
-                return false;
-            }
-            else if (_allShowCaseList.Remove(showCase))
-            {
-                return true;
-            }
-            return false;
+            return showCase._productsList.Count == 0 && _allShowCaseList.Remove(showCase);
         }
     }
-
 }
