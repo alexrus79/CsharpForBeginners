@@ -104,7 +104,7 @@ namespace HomeWork
             if (ShowCase.Quantity != 0)
             {
                 Console.WriteLine("3. Удалить витрину");
-                Console.WriteLine("4. Удалить последню витрину");
+                Console.WriteLine("4. Удалить последнюю витрину");
             }
             Console.WriteLine("5. Назад");
             Console.WriteLine("6. Выход");
@@ -230,9 +230,14 @@ namespace HomeWork
             Console.Clear();
             ShowCase.GetGlobalInfo();
             Console.WriteLine();
-            Console.WriteLine("1. Товары на складе");
-            Console.WriteLine("2. Товары на витринах");
-            Console.WriteLine("3. Добавить товар");
+            if (Product.AllProductInWarehouse > 0)
+            {
+                Console.WriteLine("1. Товары на складе");
+            }
+            if (Product.AllProductInShowCases > 0)
+            {
+                Console.WriteLine("2. Товары на витринах");
+            }           
             Console.WriteLine("5. Назад");
             Console.WriteLine("6. Выход");
             ConsoleKeyInfo consoleKey;
@@ -244,9 +249,6 @@ namespace HomeWork
                     break;
                 case "2":
                     method = Methods.MenuProductsInShowCases;
-                    break;
-                case "3":
-                    method = Methods.MenuAddProductToBase;
                     break;
                 case "5":
                     method = Methods.MainMenu;
@@ -508,11 +510,19 @@ namespace HomeWork
             Console.WriteLine();
             Product.GetProductsInWarehouse();
             Console.WriteLine();
-            Console.WriteLine("1. Разместить товар на витрине");
-            Console.WriteLine("2. Редактировать товар");
-            Console.WriteLine("3. Удалить товар");
-            Console.WriteLine("5. Назад");
-            Console.WriteLine("6. Выход");
+            if (ShowCase.Quantity > 0)
+            {
+                Console.WriteLine("1. Разместить товар на витрине");
+            }
+            Console.WriteLine("2. Добавить товар");
+            Console.WriteLine("3. Копировать товар");
+            if (Product.AllProductInWarehouse > 0)
+            {
+                Console.WriteLine("4. Редактировать товар");
+                Console.WriteLine("5. Удалить товар");
+            }
+            Console.WriteLine("6. Назад");
+            Console.WriteLine("7. Выход");
             ConsoleKeyInfo consoleKey;
             consoleKey = Console.ReadKey(true);
             switch (consoleKey.KeyChar.ToString())
@@ -531,6 +541,31 @@ namespace HomeWork
                         break;
                     }
                 case "2":
+                    method = Methods.MenuAddProductToBase;                    
+                    break;
+                case "3":
+                    Console.Clear();
+                    Console.WriteLine();
+                    Product.GetProductsInWarehouse();
+                    Console.WriteLine();
+                    tempProduct = DialogGetProduct();
+                    if (tempProduct == null)
+                    {
+                        Console.WriteLine("Товар не найден! Нажмите Enter для возврата в меню...");
+                        Console.ReadLine();
+                        method = Methods.MenuProductsInWarehouse;
+                        break;
+                    }
+                    else
+                    {
+                        Product product = new Product(tempProduct.Size, tempProduct.Name, tempProduct.Cost);
+                        Console.WriteLine("Товар скопирован и размещен на складе! Нажмите Enter для возврата в меню...");
+                        Console.ReadLine();
+                        method = Methods.MenuProductsInWarehouse;
+                        tempProduct = null;
+                        break;
+                    }
+                case "4":
                     Console.Clear();
                     Console.WriteLine();
                     Product.GetProductsInWarehouse();
@@ -556,7 +591,11 @@ namespace HomeWork
                         method = Methods.MenuEditProduct;
                         break;
                     }
-                case "3":
+                case "5":
+                    Console.Clear();
+                    Console.WriteLine();
+                    Product.GetProductsInWarehouse();
+                    Console.WriteLine();
                     tempProduct = DialogGetProduct();
                     if (tempProduct == null)
                     {
@@ -582,10 +621,10 @@ namespace HomeWork
                         break;
                     }
                     break;
-                case "5":
+                case "6":
                     method = Methods.MenuProduct;
                     break;                
-                case "6":
+                case "7":
                     method = Methods.Exit;
                     break;
                 default:
@@ -600,7 +639,10 @@ namespace HomeWork
             Console.WriteLine();
             Product.GetProductsInShowCase();
             Console.WriteLine();
-            Console.WriteLine("1. Удалить товар c витрины");
+            if (Product.AllProductInShowCases > 0)
+            {
+                Console.WriteLine("1. Удалить товар c витрины");
+            }            
             Console.WriteLine("5. Назад");
             Console.WriteLine("6. Выход");
             ConsoleKeyInfo consoleKey;
@@ -646,16 +688,29 @@ namespace HomeWork
             {
                 Console.Write("Введите наименование товара(не более 15 символов) и нажмите Enter: ");
                 string nameProduct = Console.ReadLine();
-
+                if (nameProduct == "")
+                {
+                    method = Methods.MenuAddProductToBase;
+                    return;
+                }
                 Console.Write("Введите размер товара(1-100): ");
                 string sizeString = Console.ReadLine();
-
+                if (sizeString == "")
+                {
+                    method = Methods.MenuAddProductToBase;
+                    return;
+                }
                 Console.Write("Введите стомость товара: ");
                 string costString = Console.ReadLine();
+                if (costString == "")
+                {
+                    method = Methods.MenuAddProductToBase;
+                    return;
+                }
                 int size = Convert.ToInt32(sizeString);
                 double cost = Convert.ToDouble(costString);
                 Product product = new Product(size, nameProduct, cost);
-                method = Methods.MenuProduct;
+                method = Methods.MenuProductsInWarehouse;
                 return;
             }
             catch (Exception)

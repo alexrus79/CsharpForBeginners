@@ -95,10 +95,10 @@ namespace HomeWork
             }
             else
             {
-                pad = 20 - product._name.Length;
+                pad = 15 - product._name.Length;
                 productName = product._name.PadRight(pad);
             }
-            Console.WriteLine("ID: {0}\tТовар: {1}\tразмер: {2}\tID витрины: {3}", product._id, productName, product._size, product.ShowCase?.Id ?? 0);
+            Console.WriteLine("ID: {0}\tТовар: {1} \tразмер: {2}\tID витрины: {3}", product._id, productName, product._size, product.ShowCase?.Id ?? 0);
         }
         public static void GetInfoAllProduct()
         {
