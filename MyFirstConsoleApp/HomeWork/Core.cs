@@ -70,20 +70,20 @@ namespace HomeWork
         {
             Console.Clear();
             ShowCase.GetGlobalInfo();
-            Console.WriteLine("1. Меню: Витрины");
-            Console.WriteLine("2. Меню: Товары");
-            Console.WriteLine("6. Выход");
+            Console.WriteLine("1.  Меню: Витрины");
+            Console.WriteLine("2.  Меню: Товары");
+            Console.WriteLine("F10 Выход");
             ConsoleKeyInfo consoleKey;
             consoleKey = Console.ReadKey(true);
-            switch (consoleKey.KeyChar.ToString())
+            switch (consoleKey.Key.ToString())
             {
-                case "1":
+                case "D1":
                     method = Methods.MenuShowCases;
                     break;
-                case "2":
+                case "D2":
                     method = Methods.MenuProduct;
                     break;
-                case "6":
+                case "F10":
                     method = Methods.Exit;
                     break;
                 default:
@@ -98,27 +98,28 @@ namespace HomeWork
             Console.WriteLine();
             if (ShowCase.Quantity != 0)
             {
-                Console.WriteLine("1. Информация по витрине");
+                Console.WriteLine("1.  Информация по витрине");
             }
-            Console.WriteLine("2. Добавить витрину");
+            Console.WriteLine("2.  Добавить витрину");
             if (ShowCase.Quantity != 0)
             {
-                Console.WriteLine("3. Удалить витрину");
-                Console.WriteLine("4. Удалить последнюю витрину");
+                Console.WriteLine("3.  Удалить витрину");
+                Console.WriteLine("4.  Удалить последнюю витрину");
             }
-            Console.WriteLine("5. Назад");
-            Console.WriteLine("6. Выход");
+            Console.WriteLine("ESC Назад");
+            Console.WriteLine("F10 Выход");
 
             ConsoleKeyInfo consoleKey;
             consoleKey = Console.ReadKey(true);
-            if (ShowCase.Quantity == 0 && (consoleKey.KeyChar == 49 || consoleKey.KeyChar == 51 || consoleKey.KeyChar == 52))
+            string Key = consoleKey.Key.ToString();
+            if (ShowCase.Quantity == 0 && (Key == "D1" || Key == "D3" || Key == "D4"))
             {
                 method = Methods.MenuShowCases;
                 return;
             }
-            switch (consoleKey.KeyChar.ToString())
+            switch (Key)
             {
-                case "1":
+                case "D1":
                     Console.Clear();
                     ShowCase.GetInfoAllShowCases();
                     Console.WriteLine();
@@ -133,11 +134,11 @@ namespace HomeWork
                         method = Methods.MenuEditShowCase;
                         break;
                     }
-                case "2":
+                case "D2":
                     ShowCase showCase = new ShowCase();
                     method = Methods.MenuShowCases;
                     break;
-                case "3":
+                case "D3":
                     Console.Clear();
                     ShowCase.GetInfoAllShowCases();
                     Console.WriteLine();
@@ -161,7 +162,7 @@ namespace HomeWork
                     }
                     method = Methods.MenuShowCases;
                     break;
-                case "4":
+                case "D4":
                     ShowCase showCaseLast = ShowCase.GetShowCaseFromID(ShowCase.GetLastId());
                     if (showCaseLast == null)
                     {
@@ -174,10 +175,10 @@ namespace HomeWork
                         method = Methods.MenuShowCases;
                         break;
                     }
-                case "5":
+                case "Escape":
                     method = Methods.MainMenu;
                     break;
-                case "6":
+                case "F10":
                     method = Methods.Exit;
                     break;
                 default:
@@ -192,33 +193,33 @@ namespace HomeWork
             Console.WriteLine();
             if (showCase.ProductCount > 0)
             {
-                Console.WriteLine("1. Удалить товар с витрины");
+                Console.WriteLine("1.  Удалить товар с витрины");
             }
             if (showCase.Capacity != 0)
             {
-                Console.WriteLine("2. Добавить товары со склада");
+                Console.WriteLine("2.  Добавить товары со склада");
             }
-            Console.WriteLine("5. Назад");
-            Console.WriteLine("6. Выход");
+            Console.WriteLine("ESC Назад");
+            Console.WriteLine("F10 Выход");
 
             ConsoleKeyInfo consoleKey;
             consoleKey = Console.ReadKey(true);
 
-            switch (consoleKey.KeyChar.ToString())
+            switch (consoleKey.Key.ToString())
             {
-                case "1":
+                case "D1":
                     tempShowCase = showCase;
                     method = Methods.MenuRemovProductFromShowCase;
                     break;
-                case "2":
+                case "D2":
                     tempShowCase = showCase;
                     method = Methods.MenuAddProductToShowCase;
                     break;
-                case "5":
+                case "Escape":
                     method = Methods.MenuShowCases;
                     tempShowCase = null;
                     break;
-                case "6":
+                case "F10":
                     method = Methods.Exit;
                     break;
                 default:
@@ -235,28 +236,28 @@ namespace HomeWork
             Console.WriteLine();
             if (Product.AllProductInWarehouse > 0)
             {
-                Console.WriteLine("1. Товары на складе");
+                Console.WriteLine("1.  Товары на складе");
             }
             if (Product.AllProductInShowCases > 0)
             {
-                Console.WriteLine("2. Товары на витринах");
+                Console.WriteLine("2.  Товары на витринах");
             }           
-            Console.WriteLine("5. Назад");
-            Console.WriteLine("6. Выход");
+            Console.WriteLine("ESC Назад");
+            Console.WriteLine("F10 Выход");
             ConsoleKeyInfo consoleKey;
             consoleKey = Console.ReadKey(true);
-            switch (consoleKey.KeyChar.ToString())
+            switch (consoleKey.Key.ToString())
             {
-                case "1":
+                case "D1":
                     method = Methods.MenuProductsInWarehouse;
                     break;
-                case "2":
+                case "D2":
                     method = Methods.MenuProductsInShowCases;
                     break;
-                case "5":
+                case "Escape":
                     method = Methods.MainMenu;
                     break;
-                case "6":
+                case "F10":
                     method = Methods.Exit;
                     break;
                 default:
@@ -274,32 +275,32 @@ namespace HomeWork
             {
                 if (whatEdit == null)
                 {
-                    Console.WriteLine("1. Редактировать наименование");
-                    Console.WriteLine("2. Редактировать размер");
-                    Console.WriteLine("3. Редактировать стоимость");
-                    Console.WriteLine("5. Назад");
-                    Console.WriteLine("6. Выход");
+                    Console.WriteLine("1.  Редактировать наименование");
+                    Console.WriteLine("2.  Редактировать размер");
+                    Console.WriteLine("3.  Редактировать стоимость");
+                    Console.WriteLine("ESC Назад");
+                    Console.WriteLine("F10 Выход");
                     ConsoleKeyInfo consoleKey;
                     consoleKey = Console.ReadKey(true);
-                    switch (consoleKey.KeyChar.ToString())
+                    switch (consoleKey.Key.ToString())
                     {
-                        case "1":
+                        case "D1":
                             method = Methods.MenuEditProduct;
                             tempString = "Name";
                             break;
-                        case "2":
+                        case "D2":
                             method = Methods.MenuEditProduct;
                             tempString = "Size";
                             break;
-                        case "3":
+                        case "D3":
                             method = Methods.MenuEditProduct;
                             tempString = "Cost";
                             break;
-                        case "5":
+                        case "Escape":
                             method = Methods.MenuProductsInWarehouse;
                             tempProduct = null;
                             break;
-                        case "6":
+                        case "F10":
                             method = Methods.Exit;
                             break;
                         default:
@@ -515,22 +516,26 @@ namespace HomeWork
             Console.WriteLine();
             if (ShowCase.Quantity > 0)
             {
-                Console.WriteLine("1. Разместить товар на витрине");
+                Console.WriteLine("1.  Разместить товар на витрине");
             }
-            Console.WriteLine("2. Добавить товар");
-            Console.WriteLine("3. Копировать товар");
+            Console.WriteLine("2.  Добавить товар");
+            Console.WriteLine("3.  Копировать товар");
             if (Product.AllProductInWarehouse > 0)
             {
-                Console.WriteLine("4. Редактировать товар");
-                Console.WriteLine("5. Удалить товар");
+                Console.WriteLine("4.  Редактировать товар");
+                Console.WriteLine("5.  Удалить товар");
             }
-            Console.WriteLine("6. Назад");
-            Console.WriteLine("7. Выход");
+            Console.WriteLine("ESC Назад");
+            Console.WriteLine("F10 Выход");
             ConsoleKeyInfo consoleKey;
             consoleKey = Console.ReadKey(true);
-            switch (consoleKey.KeyChar.ToString())
+            switch (consoleKey.Key.ToString())
             {
-                case "1":
+                case "D1":
+                    Console.Clear();
+                    Console.WriteLine();
+                    Product.GetProductsInWarehouse();
+                    Console.WriteLine();
                     tempShowCase = DialogGetShowCase();
                     if (tempShowCase == null)
                     {
@@ -543,10 +548,10 @@ namespace HomeWork
                         returnToMethod = Methods.MenuProductsInWarehouse;
                         break;
                     }
-                case "2":
+                case "D2":
                     method = Methods.MenuAddProductToBase;                    
                     break;
-                case "3":
+                case "D3":
                     Console.Clear();
                     Console.WriteLine();
                     Product.GetProductsInWarehouse();
@@ -568,7 +573,7 @@ namespace HomeWork
                         tempProduct = null;
                         break;
                     }
-                case "4":
+                case "D4":
                     Console.Clear();
                     Console.WriteLine();
                     Product.GetProductsInWarehouse();
@@ -594,7 +599,7 @@ namespace HomeWork
                         method = Methods.MenuEditProduct;
                         break;
                     }
-                case "5":
+                case "D5":
                     Console.Clear();
                     Console.WriteLine();
                     Product.GetProductsInWarehouse();
@@ -624,10 +629,10 @@ namespace HomeWork
                         break;
                     }
                     break;
-                case "6":
+                case "Escape":
                     method = Methods.MenuProduct;
                     break;                
-                case "7":
+                case "F10":
                     method = Methods.Exit;
                     break;
                 default:
@@ -644,17 +649,17 @@ namespace HomeWork
             Console.WriteLine();
             if (Product.AllProductInShowCases > 0)
             {
-                Console.WriteLine("1. Удалить товар c витрины");
+                Console.WriteLine("1.  Удалить товар c витрины");
             }            
-            Console.WriteLine("5. Назад");
-            Console.WriteLine("6. Выход");
+            Console.WriteLine("ESC Назад");
+            Console.WriteLine("F10 Выход");
             ConsoleKeyInfo consoleKey;
             consoleKey = Console.ReadKey(true);
-            switch (consoleKey.KeyChar.ToString())
+            switch (consoleKey.Key.ToString())
             {
-                case "1":
+                case "D1":
                     tempProduct = DialogGetProduct();
-                    tempShowCase = tempProduct.ShowCase;
+                    tempShowCase = tempProduct?.ShowCase;
                     if (tempProduct == null || tempProduct.ShowCase == null)
                     {
                         Console.WriteLine("Ошибка поиска! Нажмите Entet для возврата в меню...");
@@ -670,10 +675,10 @@ namespace HomeWork
                         break;
                     }
                     break;
-                case "5":
+                case "Escape":
                     method = Methods.MenuProduct;
                     break;
-                case "6":
+                case "F10":
                     method = Methods.Exit;
                     break;
                 default:
