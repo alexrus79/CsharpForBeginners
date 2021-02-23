@@ -501,34 +501,6 @@ namespace HomeWork
                 return null;
             }
         }
-        private static void DialogDeleteProductFromBase()
-        {
-            Console.Clear();
-            Product.GetProductsInWarehouse();
-            Console.WriteLine();
-            Product product = DialogGetProduct();
-            if (product == null)
-            {
-                Console.WriteLine("Товар не найден! Нажмите Enter для возврата в меню...");
-                Console.ReadLine();
-                MenuProductsInWarehouse();
-            }
-            else
-            {
-                if (product.ShowCase == null && Product.DelProductFromBase(product))
-                {
-                    Console.WriteLine("Товар удален! Нажмите Enter для возврата в меню...");
-                    Console.ReadLine();
-                    MenuProductsInWarehouse();
-                }
-                else
-                {
-                    Console.WriteLine("Ошибка удаления! Нажмите Enter для возврата в меню...");
-                    Console.ReadLine();
-                    MenuProductsInWarehouse();
-                }
-            }
-        }
         private static void MenuProductsInWarehouse()
         {
             returnToMethod = null;
