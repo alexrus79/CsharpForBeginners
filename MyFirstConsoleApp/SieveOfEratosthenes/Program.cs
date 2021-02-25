@@ -7,18 +7,9 @@ namespace SieveOfEratosthenes
         static void Main()
         {
             bool[] mass = new bool[1_000_000_000];
-            for (uint i = 1; i < mass.Length; i = i + 2)
+            for (uint i = 3; i < mass.Length; i = i + 2)
             {
                 mass[i] = true;
-                //uint c = 0;
-                //if (i > 1)
-                //{
-                //    for (uint s = i * i; s <= mass.Length - 1; s = (i * i) + c * i)
-                //    {
-                //        mass[s] = false;
-                //        c++;
-                //    }
-                //}
             }
 
             Console.WriteLine("Start...");
@@ -57,7 +48,6 @@ namespace SieveOfEratosthenes
             {
                 if (mass[i] == true)
                 {
-                    //Console.WriteLine(i);
                     m++;
                 }
             }
