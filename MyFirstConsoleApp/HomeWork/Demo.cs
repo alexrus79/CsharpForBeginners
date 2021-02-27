@@ -11,7 +11,7 @@ namespace HomeWork
            new Product(1, "Молоко" ,2.0),
            new Product(2, "Сахао" ,2.3),
            new Product(3, "Конфеты" ,3.2),
-           new Product(4, "Шоколод" ,1.5),
+           new Product(4, "Шоколад" ,1.5),
            new Product(5, "Пиво" ,4),
            new Product(6, "Коньяк" ,5.3),
            new Product(7, "Консервы" ,2.0),
