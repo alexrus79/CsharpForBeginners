@@ -64,7 +64,7 @@ namespace HomeWork
                 }
                 else
                 {
-                    pad = 20 - product.Name.Length;
+                    pad = 15 - product.Name.Length;
                     productName = product.Name.PadRight(pad);
                 }
                 Console.WriteLine("ID: " + product.ID + " \tТовар: " + productName  + " \tРазмер: " + product.Size + " \tСтоимость: " + product.Cost);

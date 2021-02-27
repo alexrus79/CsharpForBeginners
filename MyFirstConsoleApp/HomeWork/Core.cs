@@ -232,10 +232,7 @@ namespace HomeWork
             Console.Clear();
             ShowCase.GetGlobalInfo();
             Console.WriteLine();
-            if (Product.AllProductInWarehouse > 0)
-            {
-                Console.WriteLine("1.  Товары на складе");
-            }
+            Console.WriteLine("1.  Товары на складе");
             if (Product.AllProductInShowCases > 0)
             {
                 Console.WriteLine("2.  Товары на витринах");
@@ -433,6 +430,12 @@ namespace HomeWork
                 UserInput(showCase, returnToMethod);
                 return;
             }
+            else if (!product.PlaceProduct(showCase))
+            {
+                Console.WriteLine("Ошибка при размещении товара! Нажмите Enter для повтора или ESC для возврата в меню...");
+                UserInput(showCase, returnToMethod);
+                return;
+            }
             return;
             static void UserInput(ShowCase showCase, Methods? returnToMethod = null)
             {
@@ -515,7 +518,7 @@ namespace HomeWork
             Console.WriteLine();
             Product.GetProductsInWarehouse();
             Console.WriteLine();
-            if (ShowCase.Quantity > 0)
+            if (Product.AllProductInWarehouse > 0)
             {
                 Console.WriteLine("1.  Разместить товар на витрине");
             }
@@ -557,6 +560,7 @@ namespace HomeWork
                 case "D3":
                     Console.Clear();
                     Console.WriteLine();
+                    Product.GetProductsInShowCase();
                     Product.GetProductsInWarehouse();
                     Console.WriteLine();
                     tempProduct = DialogGetProduct();
@@ -699,7 +703,7 @@ namespace HomeWork
             string nameProduct = Console.ReadLine();
             if (nameProduct == "")
             {
-                method = Methods.MenuAddProductToBase;
+                method = Methods.MenuProductsInWarehouse;
                 return;
             }
             Console.Write("Введите размер товара(1-100): ");
